@@ -1,10 +1,15 @@
 const express = require('express');
 const app = express();
-const cats = require('./cats.js')
+const cats = require('./cats.js');
+const config = require('./config.js');
 
-app.get('/', (req, res) => res.send('Hello World!'));
 app.get('/random', (req, res) => {
-    res.sendFile(cats.getRandom());
+    var index = Math.floor(Math.random() * Object.keys(config.AspectRatio).length);
+    var ratio = Object.keys(config.AspectRatio)[index];
+    res.sendFile(cats.getCat(ratio.toLowerCase()));
+});
+app.get('/', (req, res) => {
+    res.sendFile(cats.getCat(req.query.ratio));
 });
 
 
