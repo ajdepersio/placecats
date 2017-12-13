@@ -9,7 +9,11 @@ app.get('/random', (req, res) => {
     res.sendFile(cats.getCat(ratio.toLowerCase()));
 });
 app.get('/', (req, res) => {
-    res.sendFile(cats.getCat(req.query.ratio));
+    if (req.query.ratio) {
+        res.sendFile(cats.getCat(req.query.ratio));
+    } else {
+        res.sendFile('/!_Repos/placecats/index.html');
+    }
 });
 
 
