@@ -4,8 +4,8 @@ const cats = require('./cats.js');
 const config = require('./config.js');
 
 app.get('/random', (req, res) => {
-    var index = Math.floor(Math.random() * Object.keys(config.AspectRatio).length);
-    var ratio = Object.keys(config.AspectRatio)[index];
+    var index = Math.floor(Math.random() * Object.keys(config.AspectRatios).length);
+    var ratio = Object.keys(config.AspectRatios)[index];
     res.sendFile(cats.getCat(ratio.toLowerCase()));
 });
 app.get('/', (req, res) => {
@@ -17,4 +17,4 @@ app.get('/', (req, res) => {
 });
 
 
-app.listen(3000, () => console.log('Example app listening on port 3000!'));
+app.listen(3000, () => console.log('Placecats is running at http://localhost:3000'));
