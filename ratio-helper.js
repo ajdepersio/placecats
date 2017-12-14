@@ -7,9 +7,7 @@ module.exports = {
         
         var ratios = Object.keys(config.AspectRatios);
         
-        //an incredibly high number, hopefully someone won't try to request a picture with this ration
-        //if so, stop breaking the law!!
-        var delta = 100000000.0;
+        var delta = Max.max() * -1;
         var normRatio;
         
         console.log(ratios);
