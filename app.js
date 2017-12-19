@@ -5,23 +5,19 @@ const ratioHelper = require('./ratio-helper.js');
 const config = require('./config.js');
 
 app.get('/random', (req, res) => {
-    var index = Math.floor(Math.random() * Object.keys(config.AspectRatios).length);
-    var ratio = Object.keys(config.AspectRatios)[index];
-    res.sendFile(cats.getCat(ratio.toLowerCase()));
+    res.sendFile(cats.getRandom());
 });
 app.get('/', (req, res) => {
     if (req.query.ratio) {
         res.sendFile(cats.getCat(req.query.ratio));
+    } else if (req.query.width && req.query.height) {
+        res.sendFile(cats.getCatOfDimension(req.query.width, req.query.height));
     } else {
         res.sendFile('/!_Repos/placecats/index.html');
     }
 });
 app.get('/:width/:height', (req, res) => {
-    var width = req.params.width;
-    var height = req.params.height;
-    var ratio = ratioHelper.getNearestRatio(width, height);
-
-    console.log(ratio);
+    res.sendFile(cats.getCatOfDimension(req.params.width, req.params.height));
 });
 
 
