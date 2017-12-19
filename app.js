@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cats = require('./cats.js');
+const ratioHelper = require('./ratio-helper.js');
 const config = require('./config.js');
 
 app.get('/random', (req, res) => {
@@ -14,6 +15,13 @@ app.get('/', (req, res) => {
     } else {
         res.sendFile('/!_Repos/placecats/index.html');
     }
+});
+app.get('/:width/:height', (req, res) => {
+    var width = req.params.width;
+    var height = req.params.height;
+    var ratio = ratioHelper.getNearestRatio(width, height);
+
+    console.log(ratio);
 });
 
 

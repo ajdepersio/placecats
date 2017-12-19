@@ -7,7 +7,7 @@ module.exports = {
         
         var ratios = Object.keys(config.AspectRatios);
         
-        var delta = Max.max() * -1;
+        var delta = Math.max() * -1;
         var normRatio;
         
         console.log(ratios);
