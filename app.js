@@ -19,6 +19,8 @@ app.get('/', (req, res) => {
 app.get('/:width/:height', (req, res) => {
     res.sendFile(cats.getCatOfDimension(req.params.width, req.params.height));
 });
-
+app.get('/:ratio', (req, res) => {
+    res.sendFile(cats.getCat(req.params.ratio));
+});
 
 app.listen(3000, () => console.log('Placecats is running at http://localhost:3000'));
