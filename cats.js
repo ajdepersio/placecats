@@ -1,5 +1,6 @@
 const fs = require('fs');
 const config = require('./config.js');
+const ratioHelper = require('./ratio-helper.js');
 
 var getRandom = function() {
     var index = Math.floor(Math.random() * Object.keys(config.AspectRatios).length);
@@ -17,6 +18,7 @@ var getCatOfDimension = function(width, height) {
     //Calculate nearest aspect ratio 
     var ratio = ratioHelper.getNearestRatio(width, height);
     //Get a file name similar to how getRandom works
+    var masterFile = getCat(ratio);
     //Check if this image has already been sized to the requested dimensions
     //  if yes, return it
     //  if no, create the image
