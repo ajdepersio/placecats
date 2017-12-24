@@ -13,7 +13,8 @@ app.get('/', (req, res) => {
     } else if (req.query.width && req.query.height) {
         res.sendFile(cats.getCatOfDimension(req.query.width, req.query.height));
     } else {
-        res.sendFile('/!_Repos/placecats/index.html');
+        //res.sendFile('/!_Repos/placecats/index.html');
+        res.sendFile(cats.getCat('christmas'));
     }
 });
 app.get('/:width/:height', (req, res) => {
