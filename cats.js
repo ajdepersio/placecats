@@ -1,6 +1,8 @@
 const fs = require('fs');
 const config = require('./config.js');
 const ratioHelper = require('./ratio-helper.js');
+const sharp = require('sharp');
+const path = require('path');
 
 var getRandom = function() {
     var index = Math.floor(Math.random() * Object.keys(config.AspectRatios).length);
@@ -23,6 +25,22 @@ var getCatOfDimension = function(width, height) {
     //  if yes, return it
     //  if no, create the image
 };
+
+var resizeImageSync = function(masterFilePath, width, height) {
+    var done = false;
+    var _self = this;
+    _self.done = done;
+
+    var fileName = path.basename(masterFilePath);
+    sharp(masterFilePath)
+        .resize(width, height)
+        .toFile(__dirname + '/images/' + width + '/' + height + '/' + fileName, function(err, info) {
+            if (!err) {
+                _self.done = true;
+            }
+        });
+    
+}
 
 module.exports = {
     getRandom: getRandom,
