@@ -1,0 +1,1 @@
+dotnet.exe publish -r linux-arm
