@@ -3,6 +3,8 @@ const app = express();
 const cats = require('./cats.js');
 const ratioHelper = require('./ratio-helper.js');
 const config = require('./config.js');
+const path = require('path');
+const fs = require('fs');
 
 app.get('/random', (req, res) => {
     res.sendFile(cats.getRandom());
@@ -17,6 +19,15 @@ app.get('/', (req, res) => {
     }
 });
 app.get('/:width/:height', (req, res) => {
+    var width = req.params.width;
+    var height = req.params.height;
+    var ratio = ratioHelper.getNearestRatio(width, height);
+    //Get a file name similar to how getRandom works
+    var catFile = path.basename(cats.getCat(ratio));
+    var catFilePath = config.BaseImageStore + width + '/' + height + '/' + catFile;
+    if (fs.existsSync(catFilePath)) {
+        res.sendFile(catFilePath);
+    }
     res.sendFile(cats.getCatOfDimension(req.params.width, req.params.height));
 });
 app.get('/:ratio', (req, res) => {

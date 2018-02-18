@@ -16,30 +16,11 @@ var getCat = function(ratio) {
     return ('/!_Repos/placecats/images/' + ratio + '/' + files[index]);
 };
 
-var getCatOfDimension = function(width, height) {
-    //Calculate nearest aspect ratio 
-    var ratio = ratioHelper.getNearestRatio(width, height);
-    //Get a file name similar to how getRandom works
-    var masterFile = getCat(ratio);
-    //Check if this image has already been sized to the requested dimensions
-    //  if yes, return it
-    //  if no, create the image
-};
-
-var resizeImageSync = function(masterFilePath, width, height) {
-    var done = false;
-    var _self = this;
-    _self.done = done;
-
+var resizeImage = function(masterFilePath, width, height) {
     var fileName = path.basename(masterFilePath);
-    sharp(masterFilePath)
+    return sharp(masterFilePath)
         .resize(width, height)
-        .toFile(__dirname + '/images/' + width + '/' + height + '/' + fileName, function(err, info) {
-            if (!err) {
-                _self.done = true;
-            }
-        });
-    
+        .toFile(__dirname + '/images/' + width + '/' + height + '/' + fileName, null);
 }
 
 module.exports = {
