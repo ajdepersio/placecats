@@ -27,17 +27,12 @@ app.get('/:width/:height', (req, res) => {
     var catFile = path.basename(baseCat);
     var catFilePath = config.BaseImageStore + width + '/' + height + '/' + catFile;
     if (fs.existsSync(catFilePath)) {
-        res.sendFile(catFilePath);
+        res.sendFile('/!_Repos/placecats/images/' + width + '/' + height + '/' + catFile);
     }
     cats.getCatOfDimension(baseCat, req.params.width, req.params.height)
       .then(function (data) {
-          console.log(catFilePath);
-          console.log(catFile);
-          console.log(baseCat);
           res.sendFile('/!_Repos/placecats/images/' + width + '/' + height + '/' + catFile);
       });
-
-    //res.sendFile(cats.getCatOfDimension(baseCat, req.params.width, req.params.height));
 });
 app.get('/:ratio', (req, res) => {
     res.sendFile(cats.getCat(req.params.ratio));
