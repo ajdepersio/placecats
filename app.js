@@ -23,12 +23,21 @@ app.get('/:width/:height', (req, res) => {
     var height = req.params.height;
     var ratio = ratioHelper.getNearestRatio(width, height);
     //Get a file name similar to how getRandom works
-    var catFile = path.basename(cats.getCat(ratio));
+    var baseCat = cats.getCat(ratio.name);
+    var catFile = path.basename(baseCat);
     var catFilePath = config.BaseImageStore + width + '/' + height + '/' + catFile;
     if (fs.existsSync(catFilePath)) {
         res.sendFile(catFilePath);
     }
-    res.sendFile(cats.getCatOfDimension(req.params.width, req.params.height));
+    cats.getCatOfDimension(baseCat, req.params.width, req.params.height)
+      .then(function (data) {
+          console.log(catFilePath);
+          console.log(catFile);
+          console.log(baseCat);
+          res.sendFile('/!_Repos/placecats/images/' + width + '/' + height + '/' + catFile);
+      });
+
+    //res.sendFile(cats.getCatOfDimension(baseCat, req.params.width, req.params.height));
 });
 app.get('/:ratio', (req, res) => {
     res.sendFile(cats.getCat(req.params.ratio));

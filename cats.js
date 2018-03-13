@@ -16,12 +16,26 @@ var getCat = function(ratio) {
     return ('/!_Repos/placecats/images/' + ratio + '/' + files[index]);
 };
 
-var resizeImage = function(masterFilePath, width, height) {
+// var getCatOfDimension = function(width, height) {
+//     var ratio = ratioHelper.getNearestRatio(width, height);
+//     var baseCat = getCat(ratio.name);
+//     return resizeImage(baseCat, parseInt(width), parseInt(height));
+// };
+
+var getCatOfDimension = function(masterFilePath, width, height) {
+    //Make the directory if not exist
+    try {
+        fs.mkdirSync(path.resolve('./images/' + width));
+        fs.mkdirSync(path.resolve('./images/' + width + '/' + height));
+    } catch (error) {
+        if (error.code !== 'EEXIST') throw error;
+    }
+
     var fileName = path.basename(masterFilePath);
     return sharp(masterFilePath)
-        .resize(width, height)
+        .resize(parseInt(width), parseInt(height))
         .toFile(__dirname + '/images/' + width + '/' + height + '/' + fileName, null);
-}
+};
 
 module.exports = {
     getRandom: getRandom,
