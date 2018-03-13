@@ -26,6 +26,10 @@ var getCatOfDimension = function(masterFilePath, width, height) {
     //Make the directory if not exist
     try {
         fs.mkdirSync(path.resolve('./images/' + width));
+    } catch (error) {
+        if (error.code !== 'EEXIST') throw error;
+    }
+    try {
         fs.mkdirSync(path.resolve('./images/' + width + '/' + height));
     } catch (error) {
         if (error.code !== 'EEXIST') throw error;
