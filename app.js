@@ -6,6 +6,8 @@ const config = require('./config.js');
 const path = require('path');
 const fs = require('fs');
 
+app.use(express.static('site'));
+
 app.get('/random', (req, res) => {
     res.sendFile(cats.getRandom());
 });
