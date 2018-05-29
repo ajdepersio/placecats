@@ -48,7 +48,52 @@
                 </div>
 
                 <div class="tabs-pane" id="docs">
-                    ...
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Endpoint</th>
+                                <th>Description</th>
+                                <th>Example</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>http://cats.depersio.net/random</td>
+                                <td>Returns a random cat image of a random aspect ratio.</td>
+                                <td><a href="#" onClick="MyWindow=window.open('http://cats.depersio.net/random','Meow','width=600,height=300'); return false;">Meow!</a></td>
+                            </tr>
+                            <tr>
+                                <td>http://cats.depersio.net/square</td>
+                                <td>Returns a random cat image of a 1-to-1 aspect ratio.</td>
+                                <td><a href="#" onClick="MyWindow=window.open('http://cats.depersio.net/square','Meow','width=600,height=300'); return false;">Meow!</a></td>
+                            </tr>
+                            <tr>
+                                <td>http://cats.depersio.net/standard</td>
+                                <td>Returns a random cat image of a 4-to-3 aspect ratio.</td>
+                                <td><a href="#" onClick="MyWindow=window.open('http://cats.depersio.net/standard','Meow','width=600,height=300'); return false;">Meow!</a></td>
+                            </tr>
+                            <tr>
+                                <td>http://cats.depersio.net/wide</td>
+                                <td>Returns a random cat image of a 16-to-9 aspect ratio.</td>
+                                <td><a href="#" onClick="MyWindow=window.open('http://cats.depersio.net/wide','Meow','width=600,height=300'); return false;">Meow!</a></td>
+                            </tr>
+                            <tr>
+                                <td>http://cats.depersio.net/tall</td>
+                                <td>Returns a random cat image of a 9-to-16 aspect ratio.</td>
+                                <td><a href="#" onClick="MyWindow=window.open('http://cats.depersio.net/tall','Meow','width=600,height=300'); return false;">Meow!</a></td>
+                            </tr>
+                            <tr>
+                                <td>http://cats.depersio.net/panorama</td>
+                                <td>Returns a random cat image of a 3-to-1 aspect ratio.</td>
+                                <td><a href="#" onClick="MyWindow=window.open('http://cats.depersio.net/panorama','Meow','width=600,height=300'); return false;">Meow!</a></td>
+                            </tr>
+                            <tr>
+                                <td>http://cats.depersio.net/:width/:height</td>
+                                <td>Returns a random cat image of the specified size.</td>
+                                <td><a href="#" onClick="MyWindow=window.open('http://cats.depersio.net/' + Math.floor(Math.random() * (200 - 0 + 1)) + 0 + '/' + Math.floor(Math.random() * (200 - 0 + 1)) + 0,'Meow','width=600,height=300'); return false;">Meow!</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
 
                 <div class="tabs-pane" id="contribute">
