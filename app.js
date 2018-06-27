@@ -23,18 +23,24 @@ app.get('/', (req, res) => {
 app.get('/:width/:height', (req, res) => {
     var width = req.params.width;
     var height = req.params.height;
-    var ratio = ratioHelper.getNearestRatio(width, height);
-    //Get a file name similar to how getRandom works
-    var baseCat = cats.getCat(ratio.name);
-    var catFile = path.basename(baseCat);
-    var catFilePath = config.BaseImageStore + width + '/' + height + '/' + catFile;
-    if (fs.existsSync(catFilePath)) {
-        res.sendFile('/!_Repos/placecats/images/' + width + '/' + height + '/' + catFile);
+
+    if (isNaN(width) || isNaN(height)) {
+        res.sendStatus(404);
+    } else {
+        var ratio = ratioHelper.getNearestRatio(width, height);
+        //Get a file name similar to how getRandom works
+        var baseCat = cats.getCat(ratio.name);
+        var catFile = path.basename(baseCat);
+        var catFilePath = config.BaseImageStore + width + '/' + height + '/' + catFile;
+        if (fs.existsSync(catFilePath)) {
+            res.sendFile('/!_Repos/placecats/images/' + width + '/' + height + '/' + catFile);
+        }
+        cats.getCatOfDimension(baseCat, req.params.width, req.params.height)
+        .then(function (data) {
+            res.sendFile('/!_Repos/placecats/images/' + width + '/' + height + '/' + catFile);
+        });
     }
-    cats.getCatOfDimension(baseCat, req.params.width, req.params.height)
-      .then(function (data) {
-          res.sendFile('/!_Repos/placecats/images/' + width + '/' + height + '/' + catFile);
-      });
+
 });
 app.get('/:ratio', (req, res) => {
     res.sendFile(cats.getCat(req.params.ratio));
