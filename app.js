@@ -6,12 +6,26 @@ const config = require('./config.js');
 const path = require('path');
 const fs = require('fs');
 
+var logIp = function(req) {
+    try {
+        var url = req.url;
+        var ip = req.connection.remoteAddress;
+        var proxy = req.headers['x-forwarded-for'];
+
+        fs.appendFile("./log", "\n" + url + "," + ip + "," + proxy);
+    } catch (error) {
+        console.error(error);
+    }
+};
+
 app.use(express.static('site'));
 
 app.get('/random', (req, res) => {
+    logIp(req);
     res.sendFile(cats.getRandom());
 });
 app.get('/', (req, res) => {
+    logIp(req);
     if (req.query.ratio) {
         res.sendFile(cats.getCat(req.query.ratio));
     } else if (req.query.width && req.query.height) {
@@ -24,6 +38,7 @@ app.get('/:width/:height', (req, res) => {
     var width = req.params.width;
     var height = req.params.height;
 
+    logIp(req);
     if (isNaN(width) || isNaN(height)) {
         res.sendStatus(404);
     } else {
@@ -43,6 +58,7 @@ app.get('/:width/:height', (req, res) => {
 
 });
 app.get('/:ratio', (req, res) => {
+    logIp(req);
     res.sendFile(cats.getCat(req.params.ratio));
 });
 
