@@ -12,7 +12,15 @@ var logIp = function(req) {
         var ip = req.connection.remoteAddress;
         var proxy = req.headers['x-forwarded-for'];
 
-        fs.appendFile("./log", "\n" + url + "," + ip + "," + proxy);
+        fs.exists("./log.csv", function(exists) {
+            if (!exists) {
+                fs.appendFile("./log.csv", "URL,IP,Proxy", function(error) { 
+                    fs.appendFile("./log.csv", "\n" + url + "," + ip + "," + proxy, function(error) { console.log("\n" + url + "," + ip + "," + proxy); });
+                });
+            } else {
+                fs.appendFile("./log.csv", "\n" + url + "," + ip + "," + proxy, function(error) { console.log("\n" + url + "," + ip + "," + proxy); });
+            }
+        });
     } catch (error) {
         console.error(error);
     }
