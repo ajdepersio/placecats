@@ -39,7 +39,7 @@ app.get('/', (req, res) => {
     } else if (req.query.width && req.query.height) {
         res.sendFile(cats.getCatOfDimension(req.query.width, req.query.height));
     } else {
-        res.sendFile('/!_Repos/placecats/site/index.html');
+        res.sendFile('./site/index.html');
     }
 });
 app.get('/:width/:height', (req, res) => {
@@ -54,20 +54,21 @@ app.get('/:width/:height', (req, res) => {
         //Get a file name similar to how getRandom works
         var baseCat = cats.getCat(ratio.name);
         var catFile = path.basename(baseCat);
-        var catFilePath = config.BaseImageStore + width + '/' + height + '/' + catFile;
+        var catFilePath = process.cwd() + '/images/' + width + '/' + height + '/' + catFile;
         if (fs.existsSync(catFilePath)) {
-            res.sendFile('/!_Repos/placecats/images/' + width + '/' + height + '/' + catFile);
+            res.sendFile(process.cwd() + '/images/' + width + '/' + height + '/' + catFile);
         }
         cats.getCatOfDimension(baseCat, req.params.width, req.params.height)
         .then(function (data) {
-            res.sendFile('/!_Repos/placecats/images/' + width + '/' + height + '/' + catFile);
+            res.sendFile(process.cwd() + '/images/' + width + '/' + height + '/' + catFile);
         });
     }
 
 });
 app.get('/:ratio', (req, res) => {
     logIp(req);
-    res.sendFile(cats.getCat(req.params.ratio));
+    var ratio = req.params.ratio;
+    res.sendFile(cats.getCat(ratio));
 });
 
 app.listen(3000, () => console.log('Placecats is running at http://localhost:3000'));

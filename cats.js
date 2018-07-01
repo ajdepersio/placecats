@@ -13,7 +13,7 @@ var getRandom = function() {
 var getCat = function(ratio) {
     var files = fs.readdirSync('./images/' + ratio + '/');
     var index = Math.floor(Math.random() * files.length);
-    return ('/!_Repos/placecats/images/' + ratio + '/' + files[index]);
+    return (process.cwd() + '/images/' + ratio + '/' + files[index]);
 };
 
 // var getCatOfDimension = function(width, height) {

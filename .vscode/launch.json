@@ -8,7 +8,7 @@
             "type": "node",
             "request": "launch",
             "name": "Launch Program",
-            "program": "/!_Repos/placecats/app.js"
+            "program": "${workspaceRoot}/app.js"
         }
     ]
 }

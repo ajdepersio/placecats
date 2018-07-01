@@ -1,5 +1,4 @@
 module.exports = {
-    BaseImageStore : './images/',
     AspectRatios : {
         Square : {
             name : 'square',
