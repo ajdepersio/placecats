@@ -67,8 +67,20 @@ app.get('/:width/:height', (req, res) => {
 });
 app.get('/:ratio', (req, res) => {
     logIp(req);
+    //Check that request is valid
+    var valid = false;
+    var validRatios = Object.getOwnPropertyNames(config.AspectRatios);
     var ratio = req.params.ratio;
-    res.sendFile(cats.getCat(ratio));
+    validRatios.forEach(function(validRatio) {
+        if (ratio.toUpperCase() == validRatio.toUpperCase()) {
+            valid = true;
+        }
+    }, this);
+    if (!valid) {
+        res.sendStatus(404);
+    } else {
+        res.sendFile(cats.getCat(ratio.toLowerCase()));
+    }
 });
 
 app.listen(3000, () => console.log('Placecats is running at http://localhost:3000'));
