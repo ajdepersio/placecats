@@ -15,10 +15,10 @@ var logIp = function(req) {
         fs.exists("./log.csv", function(exists) {
             if (!exists) {
                 fs.appendFile("./log.csv", "URL,IP,Proxy", function(error) { 
-                    fs.appendFile("./log.csv", "\n" + url + "," + ip + "," + proxy, function(error) { console.log("\n" + url + "," + ip + "," + proxy); });
+                    fs.appendFile("./log.csv", "\n" + url + "," + ip + "," + proxy, function(error) { });
                 });
             } else {
-                fs.appendFile("./log.csv", "\n" + url + "," + ip + "," + proxy, function(error) { console.log("\n" + url + "," + ip + "," + proxy); });
+                fs.appendFile("./log.csv", "\n" + url + "," + ip + "," + proxy, function(error) { });
             }
         });
     } catch (error) {
