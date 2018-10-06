@@ -1,6 +1,5 @@
 const fs = require('fs');
 const config = require('./config.js');
-const ratioHelper = require('./ratio-helper.js');
 const sharp = require('sharp');
 const path = require('path');
 
@@ -15,12 +14,6 @@ var getCat = function(ratio) {
     var index = Math.floor(Math.random() * files.length);
     return (process.cwd() + '/images/' + ratio + '/' + files[index]);
 };
-
-// var getCatOfDimension = function(width, height) {
-//     var ratio = ratioHelper.getNearestRatio(width, height);
-//     var baseCat = getCat(ratio.name);
-//     return resizeImage(baseCat, parseInt(width), parseInt(height));
-// };
 
 var getCatOfDimension = function(masterFilePath, width, height) {
     //Make the directory if not exist

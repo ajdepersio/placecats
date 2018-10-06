@@ -1,0 +1,57 @@
+<html>
+
+<head>
+    <link rel="stylesheet" type="text/css" href="css/shoelace.css">
+    <link rel="stylesheet" href="css/site.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+    <script type="application/javascript" src="js/shoelace.js"></script>
+    <!-- TODO: Move this into it's own file -->
+    <script type="text/javascript">
+        $(document).ready(function() {
+            loadImagesForReview(getImagesPaths());
+        });
+
+        function getImagesPaths() {
+
+        }
+
+        function loadImagesForReview(paths) {
+
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-2">
+                <img width="100%" class="align-right" src="assets/logo-black.png" alt="header">
+            </div>
+            <div class="col-6 offset-1">
+                <h1 class="align-center" >Admin Page</h1>
+            </div>
+            <div class="col-2 offset-1">
+                <img width="100%" class="align-left" src="assets/logo-black.png" alt="header">
+            </div>
+        </div>
+        <hr>
+        <div class="row">
+        </div>
+    </div>
+
+    <!-- Templates -->
+    <div id="image-review-template" class="row">
+        <div class="col-4 offset-2">
+            <img src="assets/images-to-review/1.jpg" class="img-responsive" alt="Image">
+        </div>
+        <div class="col-1">
+            <button type="button">Button</button>
+            <button type="button">Button</button>
+            <button type="button">Button</button>
+            <button type="button">Button</button>
+        </div>
+    </div>
+</body>
+
+</html>
