@@ -7,6 +7,14 @@
     text-align: center;
 }
 
+.align-left {
+    text-align: left;
+}
+
+.align-right {
+    text-align: right;
+}
+
 .content-img {
     border-radius: 5px;
 }
