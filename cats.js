@@ -1,6 +1,5 @@
 const fs = require('fs');
 const config = require('./config.js');
-const ratioHelper = require('./ratio-helper.js');
 const sharp = require('sharp');
 const path = require('path');
 
@@ -16,29 +15,31 @@ var getCat = function(ratio) {
     return (process.cwd() + '/images/' + ratio + '/' + files[index]);
 };
 
-// var getCatOfDimension = function(width, height) {
-//     var ratio = ratioHelper.getNearestRatio(width, height);
-//     var baseCat = getCat(ratio.name);
-//     return resizeImage(baseCat, parseInt(width), parseInt(height));
-// };
-
-var getCatOfDimension = function(masterFilePath, width, height) {
-    //Make the directory if not exist
-    try {
-        fs.mkdirSync(path.resolve('./images/' + width));
-    } catch (error) {
-        if (error.code !== 'EEXIST') throw error;
-    }
-    try {
-        fs.mkdirSync(path.resolve('./images/' + width + '/' + height));
-    } catch (error) {
-        if (error.code !== 'EEXIST') throw error;
-    }
-
+var getCatOfDimension = function(masterFilePath, width, height, outputFolder) {
     var fileName = path.basename(masterFilePath);
+    var outputFile = __dirname + '/images/';
+
+    if (outputFolder) {
+        outputFile += outputFolder;
+    } else {
+        //Make the directory if not exist
+        try {
+            fs.mkdirSync(path.resolve('./images/' + width));
+        } catch (error) {
+            if (error.code !== 'EEXIST') throw error;
+        }
+        try {
+            fs.mkdirSync(path.resolve('./images/' + width + '/' + height));
+        } catch (error) {
+            if (error.code !== 'EEXIST') throw error;
+        }
+        outputFile += width + '/' + height;
+    }
+    outputFile += '/' + fileName;
+
     return sharp(masterFilePath)
         .resize(parseInt(width), parseInt(height))
-        .toFile(__dirname + '/images/' + width + '/' + height + '/' + fileName, null);
+        .toFile(outputFile, null);
 };
 
 module.exports = {

@@ -26,7 +26,7 @@ var logIp = function(req) {
     }
 };
 
-app.use(express.static('site'));
+app.use(express.static('site/public'));
 
 app.get('/random', (req, res) => {
     logIp(req);
@@ -39,9 +39,18 @@ app.get('/', (req, res) => {
     } else if (req.query.width && req.query.height) {
         res.sendFile(cats.getCatOfDimension(req.query.width, req.query.height));
     } else {
-        res.sendFile('./site/index.html');
+        res.sendFile('index.html');
     }
 });
+
+app.get('/admin/:resource', (req, res) => {
+  if (req.query.key === config.AdminKey) {
+    res.sendFile(process.cwd() + '/site/private/index.html');
+  } else {
+      res.sendStatus(401);
+  }
+});
+
 app.get('/:width/:height', (req, res) => {
     var width = req.params.width;
     var height = req.params.height;

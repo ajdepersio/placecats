@@ -1,4 +1,5 @@
 module.exports = {
+    AdminKey : '',
     AspectRatios : {
         Square : {
             name : 'square',
