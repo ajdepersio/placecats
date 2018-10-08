@@ -43,7 +43,7 @@ app.get('/', (req, res) => {
     }
 });
 
-app.get('/admin/:resource', (req, res) => {
+app.get('/admin', (req, res) => {
   if (req.query.key === config.AdminKey) {
     res.sendFile(process.cwd() + '/site/private/index.html');
   } else {
