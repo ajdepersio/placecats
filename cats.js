@@ -15,23 +15,31 @@ var getCat = function(ratio) {
     return (process.cwd() + '/images/' + ratio + '/' + files[index]);
 };
 
-var getCatOfDimension = function(masterFilePath, width, height) {
-    //Make the directory if not exist
-    try {
-        fs.mkdirSync(path.resolve('./images/' + width));
-    } catch (error) {
-        if (error.code !== 'EEXIST') throw error;
-    }
-    try {
-        fs.mkdirSync(path.resolve('./images/' + width + '/' + height));
-    } catch (error) {
-        if (error.code !== 'EEXIST') throw error;
-    }
-
+var getCatOfDimension = function(masterFilePath, width, height, outputFolder) {
     var fileName = path.basename(masterFilePath);
+    var outputFile = __dirname + '/images/';
+
+    if (outputFolder) {
+        outputFile += outputFolder;
+    } else {
+        //Make the directory if not exist
+        try {
+            fs.mkdirSync(path.resolve('./images/' + width));
+        } catch (error) {
+            if (error.code !== 'EEXIST') throw error;
+        }
+        try {
+            fs.mkdirSync(path.resolve('./images/' + width + '/' + height));
+        } catch (error) {
+            if (error.code !== 'EEXIST') throw error;
+        }
+        outputFile += width + '/' + height;
+    }
+    outputFile += '/' + fileName;
+
     return sharp(masterFilePath)
         .resize(parseInt(width), parseInt(height))
-        .toFile(__dirname + '/images/' + width + '/' + height + '/' + fileName, null);
+        .toFile(outputFile, null);
 };
 
 module.exports = {
