@@ -92,4 +92,4 @@ app.get('/:ratio', (req, res) => {
     }
 });
 
-app.listen(3000, () => console.log('Placecats is running at http://localhost:3000'));
+app.listen(config.Port, () => console.log('Placecats is running at http://localhost:' + config.Port.toString()));
