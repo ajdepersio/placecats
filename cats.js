@@ -9,6 +9,15 @@ var getRandom = function() {
     return (getCat(ratio.toLowerCase()));
 };
 
+var getCatsForReview = function() {
+    var results = [];
+    var files = fs.readdirSync('./site/public/assets/review/');
+    files.forEach(file => {
+        results.push('assets/review/' + file);
+    });
+    return results;
+}
+
 var getCat = function(ratio) {
     var files = fs.readdirSync('./images/' + ratio + '/');
     var index = Math.floor(Math.random() * files.length);
@@ -44,6 +53,7 @@ var getCatOfDimension = function(masterFilePath, width, height, outputFolder) {
 
 module.exports = {
     getRandom: getRandom,
+    getCatsForReview: getCatsForReview,
     getCat: getCat,
     getCatOfDimension: getCatOfDimension
 };

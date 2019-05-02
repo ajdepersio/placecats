@@ -6,19 +6,19 @@ const config = require('./config.js');
 const path = require('path');
 const fs = require('fs');
 
-var logIp = function(req) {
+var logIp = function (req) {
     try {
         var url = req.url;
         var ip = req.connection.remoteAddress;
         var proxy = req.headers['x-forwarded-for'];
 
-        fs.exists("./log.csv", function(exists) {
+        fs.exists("./log.csv", function (exists) {
             if (!exists) {
-                fs.appendFile("./log.csv", "URL,IP,Proxy", function(error) { 
-                    fs.appendFile("./log.csv", "\n" + url + "," + ip + "," + proxy, function(error) { });
+                fs.appendFile("./log.csv", "URL,IP,Proxy", function (error) {
+                    fs.appendFile("./log.csv", "\n" + url + "," + ip + "," + proxy, function (error) {});
                 });
             } else {
-                fs.appendFile("./log.csv", "\n" + url + "," + ip + "," + proxy, function(error) { });
+                fs.appendFile("./log.csv", "\n" + url + "," + ip + "," + proxy, function (error) {});
             }
         });
     } catch (error) {
@@ -44,11 +44,19 @@ app.get('/', (req, res) => {
 });
 
 app.get('/admin', (req, res) => {
-  if (req.query.key === config.AdminKey) {
-    res.sendFile(process.cwd() + '/site/private/index.html');
-  } else {
-      res.sendStatus(401);
-  }
+    if (req.query.key === config.AdminKey) {
+        res.sendFile(process.cwd() + '/site/private/index.html');
+    } else {
+        res.sendStatus(401);
+    }
+});
+
+app.get('/admin/review', (req, res) => {
+    if (req.query.key === config.AdminKey) {
+        res.send(cats.getCatsForReview());
+    } else {
+        res.sendStatus(401);
+    }
 });
 
 app.get('/:width/:height', (req, res) => {
@@ -68,9 +76,9 @@ app.get('/:width/:height', (req, res) => {
             res.sendFile(process.cwd() + '/images/' + width + '/' + height + '/' + catFile);
         }
         cats.getCatOfDimension(baseCat, req.params.width, req.params.height)
-        .then(function (data) {
-            res.sendFile(process.cwd() + '/images/' + width + '/' + height + '/' + catFile);
-        });
+            .then(function (data) {
+                res.sendFile(process.cwd() + '/images/' + width + '/' + height + '/' + catFile);
+            });
     }
 
 });
@@ -80,7 +88,7 @@ app.get('/:ratio', (req, res) => {
     var valid = false;
     var validRatios = Object.getOwnPropertyNames(config.AspectRatios);
     var ratio = req.params.ratio;
-    validRatios.forEach(function(validRatio) {
+    validRatios.forEach(function (validRatio) {
         if (ratio.toUpperCase() == validRatio.toUpperCase()) {
             valid = true;
         }
