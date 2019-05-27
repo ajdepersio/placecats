@@ -1,6 +1,6 @@
 module.exports = {
     AdminKey : '',
-    Port: 3001,
+    Port: 3000,
     AspectRatios : {
         Square : {
             name : 'square',
