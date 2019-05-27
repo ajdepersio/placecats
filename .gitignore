@@ -61,3 +61,7 @@ typings/
 # Generated Images
 images/[0-9]*/
 site/public/assets/images-to-review/
+
+#SSL files
+.cert
+.key

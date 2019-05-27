@@ -5,6 +5,7 @@ const ratioHelper = require('./ratio-helper.js');
 const config = require('./config.js');
 const path = require('path');
 const fs = require('fs');
+const https = require('https');
 
 var logIp = function(req) {
     try {
@@ -92,4 +93,8 @@ app.get('/:ratio', (req, res) => {
     }
 });
 
-app.listen(config.Port, () => console.log('Placecats is running at http://localhost:' + config.Port.toString()));
+https.createServer({
+    key: fs.readFileSync('server.key'),
+    cert: fs.readFileSync('server.cert')},
+    app).listen(config.Port, () => console.log('Placecats is running at http://localhost:' + config.Port.toString())
+);
