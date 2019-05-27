@@ -15,7 +15,7 @@
         function loadImagesForReview() {
             $.ajax({
                 type: "GET",
-                url: "http://localhost:3001/admin/review?key=",
+                url: "http://localhost:3000/admin/review?key=",
                 success: function(data, textStatus, jqXHR){
                     populateImageReview(data);
                 },
@@ -54,7 +54,7 @@
     <!-- Templates -->
     <div id="image-review-template" class="row">
         <div class="col-3 offset-3">
-            <img src="assets/review/1.jpeg" class="img-responsive" alt="Image">
+            <img src="assets/review/ASDFG.jpeg" class="img-responsive" alt="Image">
         </div>
         <div class="col-3">
             <button type="button">Standard</button>

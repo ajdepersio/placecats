@@ -1,5 +1,6 @@
 const express = require('express');
 const app = express();
+const bodyParser = require('body-parser');
 const cats = require('./cats.js');
 const ratioHelper = require('./ratio-helper.js');
 const config = require('./config.js');
@@ -12,7 +13,7 @@ var logIp = function (req) {
         var url = req.url;
         var ip = req.connection.remoteAddress;
         var proxy = req.headers['x-forwarded-for'];
-
+        
         fs.exists("./log.csv", function (exists) {
             if (!exists) {
                 fs.appendFile("./log.csv", "URL,IP,Proxy", function (error) {
@@ -27,6 +28,7 @@ var logIp = function (req) {
     }
 };
 
+app.use(bodyParser);
 app.use(express.static('site/public'));
 
 app.get('/random', (req, res) => {
@@ -45,6 +47,7 @@ app.get('/', (req, res) => {
 });
 
 app.get('/admin', (req, res) => {
+    logIp(req);
     if (req.query.key === config.AdminKey) {
         res.sendFile(process.cwd() + '/site/private/index.html');
     } else {
@@ -53,8 +56,26 @@ app.get('/admin', (req, res) => {
 });
 
 app.get('/admin/review', (req, res) => {
+    logIp(req);
     if (req.query.key === config.AdminKey) {
         res.send(cats.getCatsForReview());
+    } else {
+        res.sendStatus(401);
+    }
+});
+
+app.post('/admin/review/approve', (req, res) => {
+    logIp(req);
+    if (req.query.key === config.AdminKey) {
+        var fileName = process.cwd() + '/site/public/assets/review/' + req.body.fileName;
+        var ratio = req.body.ratio;
+        if (!ratioHelper.validateRatio(ratio)) {
+            res.sendStatus(404);
+        } else {
+            var ratioObj = config.ratio.keys(ratio);
+            cats.getCatOfDimension(fileName, ratioObj.exWidth, ratioObj.exHeight, ratio);
+            res.sendStatus(200);
+        }
     } else {
         res.sendStatus(401);
     }
@@ -85,24 +106,17 @@ app.get('/:width/:height', (req, res) => {
 });
 app.get('/:ratio', (req, res) => {
     logIp(req);
-    //Check that request is valid
-    var valid = false;
-    var validRatios = Object.getOwnPropertyNames(config.AspectRatios);
-    var ratio = req.params.ratio;
-    validRatios.forEach(function (validRatio) {
-        if (ratio.toUpperCase() == validRatio.toUpperCase()) {
-            valid = true;
-        }
-    }, this);
-    if (!valid) {
+    if (!ratioHelper.validateRatio(ratio)) {
         res.sendStatus(404);
     } else {
         res.sendFile(cats.getCat(ratio.toLowerCase()));
     }
 });
 
-https.createServer({
-    key: fs.readFileSync('server.key'),
-    cert: fs.readFileSync('server.cert')},
-    app).listen(config.Port, () => console.log('Placecats is running at http://localhost:' + config.Port.toString())
-);
+// https.createServer({
+//     key: fs.readFileSync('server.key'),
+//     cert: fs.readFileSync('server.cert')},
+//     app).listen(config.httpsPort, () => console.log('Placecats is running at http://localhost:' + config.httpsPort.toString())
+// );
+
+app.listen(config.httpPort, () => console.log('Placecats is running at http://localhost:' + config.httpPort.toString()));

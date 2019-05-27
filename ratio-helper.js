@@ -20,6 +20,19 @@ module.exports = {
             }
         }
         return results;
+    },
+    validateRatio : (ratio) => {
+        //Check that request is valid
+        var valid = false;
+        var validRatios = Object.getOwnPropertyNames(config.AspectRatios);
+        var ratio = ratio;
+        validRatios.forEach(function (validRatio) {
+            if (ratio.toUpperCase() == validRatio.toUpperCase()) {
+                valid = true;
+            }
+        }, this);
+        
+        return valid;
     }
 }
 
