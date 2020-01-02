@@ -1,6 +1,5 @@
 const express = require('express');
 const app = express();
-const bodyParser = require('body-parser');
 const cats = require('./cats.js');
 const ratioHelper = require('./ratio-helper.js');
 const config = require('./config.js');
@@ -28,7 +27,6 @@ var logIp = function (req) {
     }
 };
 
-app.use(bodyParser);
 app.use(express.static('site/public'));
 
 //Website Endpoints
@@ -110,6 +108,7 @@ app.get('/:width/:height', (req, res) => {
 
 app.get('/:ratio', (req, res) => {
     logIp(req);
+    var ratio = req.params.ratio;
     if (!ratioHelper.validateRatio(ratio)) {
         res.sendStatus(404);
     } else {
