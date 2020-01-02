@@ -1,5 +1,6 @@
 module.exports = {
     AdminKey : '',
+    Debug: true,
     httpPort: 3000,
     httpsPort: 3001,
     AspectRatios : {

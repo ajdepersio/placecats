@@ -13,14 +13,14 @@ var logIp = function (req) {
         var url = req.url;
         var ip = req.connection.remoteAddress;
         var proxy = req.headers['x-forwarded-for'];
-        
-        fs.exists("./log.csv", function (exists) {
+
+        fs.exists("./http-log.csv", function (exists) {
             if (!exists) {
-                fs.appendFile("./log.csv", "URL,IP,Proxy", function (error) {
-                    fs.appendFile("./log.csv", "\n" + url + "," + ip + "," + proxy, function (error) {});
+                fs.appendFile("./http-log.csv", "URL,IP,Proxy", function (error) {
+                    fs.appendFile("./http-log.csv", "\n" + url + "," + ip + "," + proxy, function (error) { });
                 });
             } else {
-                fs.appendFile("./log.csv", "\n" + url + "," + ip + "," + proxy, function (error) {});
+                fs.appendFile("./http-log.csv", "\n" + url + "," + ip + "," + proxy, function (error) { });
             }
         });
     } catch (error) {
@@ -31,10 +31,7 @@ var logIp = function (req) {
 app.use(bodyParser);
 app.use(express.static('site/public'));
 
-app.get('/random', (req, res) => {
-    logIp(req);
-    res.sendFile(cats.getRandom());
-});
+//Website Endpoints
 app.get('/', (req, res) => {
     logIp(req);
     if (req.query.ratio) {
@@ -81,6 +78,12 @@ app.post('/admin/review/approve', (req, res) => {
     }
 });
 
+//API Endpoints
+app.get('/random', (req, res) => {
+    logIp(req);
+    res.sendFile(cats.getRandom());
+});
+
 app.get('/:width/:height', (req, res) => {
     var width = req.params.width;
     var height = req.params.height;
@@ -104,6 +107,7 @@ app.get('/:width/:height', (req, res) => {
     }
 
 });
+
 app.get('/:ratio', (req, res) => {
     logIp(req);
     if (!ratioHelper.validateRatio(ratio)) {
@@ -113,10 +117,14 @@ app.get('/:ratio', (req, res) => {
     }
 });
 
-// https.createServer({
-//     key: fs.readFileSync('server.key'),
-//     cert: fs.readFileSync('server.cert')},
-//     app).listen(config.httpsPort, () => console.log('Placecats is running at http://localhost:' + config.httpsPort.toString())
-// );
+//Start Webserver
+if (config.Debug) {
+    app.listen(config.httpPort, () => console.log('Placecats is running at http://localhost:' + config.httpPort.toString()));
+} else {
+    var server = https.createServer({
+        key: fs.readFileSync('server.key'),
+        cert: fs.readFileSync('server.cert')
+    }, app);
 
-app.listen(config.httpPort, () => console.log('Placecats is running at http://localhost:' + config.httpPort.toString()));
+    server.listen(config.httpsPort, () => console.log('Placecats is running at https://localhost:' + config.httpsPort.toString()));
+}
