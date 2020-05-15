@@ -1,16 +1,21 @@
 var express = require('express');
 var router = express.Router();
 
-var Site = require('./controllers/site.js');
-var Api = require('./controllers/api.js');
+var site = require('./controllers/site.js');
+var admin = require('./controllers/admin.js');
+var api = require('./controllers/api.js');
 
-router.get('/', Site.getIndex);
-router.get('/admin', Site.getAdmin);
-router.get('/admin/review', Site.getReview);
-router.post('/admin/review/approve', Site.postApprove);
+//Website endpoints
+router.get('/', site.getIndex);
 
-router.get('/random', Api.getRandom);
-router.get('/:width/:height', Api.getWidthHeight);
-router.get('/:ratio', Api.getRatio);
+//Admin endpoints
+router.get('/admin', admin.getAdmin);
+router.get('/admin/review', admin.getReview);
+router.post('/admin/review/approve', admin.postApprove);
+
+//API endpoints
+router.get('/random', api.getRandom);
+router.get('/:width/:height', api.getWidthHeight);
+router.get('/:ratio', api.getRatio);
 
 module.exports = router;
