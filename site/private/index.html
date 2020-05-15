@@ -27,7 +27,13 @@
 
         function populateImageReview(paths) {
             paths.forEach(path => {
-                alert(path);
+                var imageReviewTemplate = document.querySelector('#image-review-template').content;
+                var image = imageReviewTemplate.querySelector('.review-image');
+                image.src = "http://localhost:3000/" + path;
+
+                document.querySelector('#image-review-container').appendChild(
+                    document.importNode(imageReviewTemplate, true)
+                );
             });
         }
     </script>
@@ -51,19 +57,22 @@
         </div>
     </div>
 
-    <!-- Templates -->
-    <div id="image-review-template" class="row">
-        <div class="col-3 offset-3">
-            <img src="assets/review/ASDFG.jpeg" class="img-responsive" alt="Image">
-        </div>
-        <div class="col-3">
-            <button type="button">Standard</button>
-            <button type="button">Tall</button>
-            <button type="button">Wide</button>
-            <button type="button">Square</button>
-            <button type="button">Panorama</button>
-            <button type="button" class="button-danger">Reject</button>
-        </div>
+    <div id="image-review-container">
+        <template id="image-review-template">
+            <div class="row">
+                <div class="col-3 offset-3">
+                    <img class="img-responsive review-image" src="" alt="Image">
+                </div>
+                <div class="col-3">
+                    <button type="button">Standard</button>
+                    <button type="button">Tall</button>
+                    <button type="button">Wide</button>
+                    <button type="button">Square</button>
+                    <button type="button">Panorama</button>
+                    <button type="button" class="button-danger">Reject</button>
+                </div>
+            </div>
+        </template>
     </div>
 </body>
 

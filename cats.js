@@ -16,7 +16,7 @@ var getCatsForReview = function() {
         results.push('assets/review/' + file);
     });
     return results;
-}
+};
 
 var getCat = function(ratio) {
     var files = fs.readdirSync('./images/' + ratio + '/');
