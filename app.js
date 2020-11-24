@@ -4,7 +4,7 @@ const fs = require('fs');
 const https = require('https');
 const config = require('./config.js');
 
-var router = require('./routes.js');
+var router = require('./src/routes.js');
 
 app.use(express.static('site/public'));
 app.use('/', router);
