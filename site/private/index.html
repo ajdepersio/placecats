@@ -8,6 +8,7 @@
     <script type="application/javascript" src="js/shoelace.js"></script>
     <!-- TODO: Move this into it's own file -->
     <script type="text/javascript">
+        const authKey = new URLSearchParams(window.location.search).get("key");
         $(document).ready(function() {
             loadImagesForReview();
         });
@@ -15,7 +16,7 @@
         function loadImagesForReview() {
             $.ajax({
                 type: "GET",
-                url: "http://localhost:3000/admin/review?key=",
+                url: `http://localhost:3000/admin/review?key=${authKey}`,
                 success: function(data, textStatus, jqXHR){
                     populateImageReview(data);
                 },
