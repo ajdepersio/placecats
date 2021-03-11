@@ -1,4 +1,5 @@
 const fs = require('fs');
+const path = require('path');
 
 const cats = require('../cats.js');
 const log = require('../utilities/log.js');
