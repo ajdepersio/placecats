@@ -1,4 +1,5 @@
 const express = require('express');
+const serveIndex = require('serve-index');
 const app = express();
 const cats = require('./cats.js');
 const ratioHelper = require('./ratio-helper.js');
@@ -28,6 +29,7 @@ var logIp = function (req) {
 };
 
 app.use(express.static('site/public'));
+app.use('/.well-known', express.static('.well-known'), serveIndex('.well-known'));
 
 //Website Endpoints
 app.get('/', (req, res) => {
