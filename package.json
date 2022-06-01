@@ -17,7 +17,7 @@
     "express-generator": "^4.15.5",
     "gm": "^1.23.1",
     "path": "^0.12.7",
-    "sharp": "^0.18.4",
+    "sharp": "^0.30.5",
     "shoelace-css": "^1.0.0-beta24"
   },
   "jshintConfig": {
